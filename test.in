@@ -1,0 +1,1 @@
+{"cmd": "def f : Nat := by have t := 37; exact t\n\ndef g : Nat := by exact 9", "allTactics": true, "infotree":"full"}

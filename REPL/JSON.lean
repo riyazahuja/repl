@@ -18,6 +18,8 @@ structure CommandOptions where
   Anything else is ignored.
   -/
   infotree : Option String
+  theorems : Option Bool := none
+
 
 /-- Run Lean commands.
 If `env = none`, starts a new session (in which you can use `import`).
@@ -123,6 +125,7 @@ structure CommandResponse where
   sorries : List Sorry := []
   tactics : List Tactic := []
   infotree : Option Json := none
+  theorems : Option Json := none
 deriving FromJson
 
 def Json.nonemptyList [ToJson α] (k : String) : List α → List (String × Json)
@@ -135,7 +138,8 @@ instance : ToJson CommandResponse where
     Json.nonemptyList "messages" r.messages,
     Json.nonemptyList "sorries" r.sorries,
     Json.nonemptyList "tactics" r.tactics,
-    match r.infotree with | some j => [("infotree", j)] | none => []
+    match r.infotree with | some j => [("infotree", j)] | none => [],
+    match r.theorems with | some j => [("theorems", j)] | none => []
   ]
 
 /--

@@ -1,0 +1,573 @@
+{"tactics":
+ [{"tactic": "have t := 37",
+   "proofState": 0,
+   "pos": {"line": 1, "column": 18},
+   "goals": "⊢ Nat",
+   "endPos": {"line": 1, "column": 30}},
+  {"tactic": "exact t",
+   "proofState": 1,
+   "pos": {"line": 1, "column": 32},
+   "goals": "t : Nat ⊢ Nat",
+   "endPos": {"line": 1, "column": 39}},
+  {"tactic": "exact 9",
+   "proofState": 2,
+   "pos": {"line": 3, "column": 18},
+   "goals": "⊢ Nat",
+   "endPos": {"line": 3, "column": 25}}],
+ "infotree":
+ [{"node":
+   {"stx":
+    {"range":
+     {"synthetic": false,
+      "start": {"line": 1, "column": 0},
+      "finish": {"line": 1, "column": 39}},
+     "pp": "def f : Nat := by have t := 37; exact t"},
+    "elaborator": "Lean.Elab.Command.elabDeclaration"},
+   "kind": "CommmandInfo",
+   "children":
+   [{"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 1, "column": 8},
+        "finish": {"line": 1, "column": 11}},
+       "pp": "Nat"},
+      "isBinder": false,
+      "expr": "Nat",
+      "expectedType": "Type",
+      "elaborator": "Lean.Elab.Term.elabIdent"},
+     "kind": "TermInfo",
+     "children":
+     [{"node": null, "kind": "CompletionInfo", "children": []},
+      {"node":
+       {"stx":
+        {"range":
+         {"synthetic": false,
+          "start": {"line": 1, "column": 8},
+          "finish": {"line": 1, "column": 11}},
+         "pp": "Nat"},
+        "isBinder": false,
+        "expr": "Nat",
+        "expectedType": "Type",
+        "elaborator": null},
+       "kind": "TermInfo",
+       "children": []}]},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 1, "column": 4},
+        "finish": {"line": 1, "column": 5}},
+       "pp": "f"},
+      "isBinder": true,
+      "expr": "f",
+      "elaborator": null},
+     "kind": "TermInfo",
+     "children": []},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 1, "column": 15},
+        "finish": {"line": 1, "column": 39}},
+       "pp": "by have t := 37; exact t"},
+      "name": "Lean.Parser.Term.byTactic",
+      "goalsBefore": ["⊢ Nat"],
+      "goalsAfter": []},
+     "kind": "TacticInfo",
+     "children":
+     [{"node":
+       {"stx":
+        {"range":
+         {"synthetic": false,
+          "start": {"line": 1, "column": 15},
+          "finish": {"line": 1, "column": 17}},
+         "pp": "<failed to pretty print>"},
+        "name": null,
+        "goalsBefore": ["⊢ Nat"],
+        "goalsAfter": []},
+       "kind": "TacticInfo",
+       "children":
+       [{"node":
+         {"stx":
+          {"range":
+           {"synthetic": false,
+            "start": {"line": 1, "column": 18},
+            "finish": {"line": 1, "column": 39}},
+           "pp": "have t := 37; exact t"},
+          "name": "Lean.Parser.Tactic.tacticSeq",
+          "goalsBefore": ["⊢ Nat"],
+          "goalsAfter": []},
+         "kind": "TacticInfo",
+         "children":
+         [{"node":
+           {"stx":
+            {"range":
+             {"synthetic": false,
+              "start": {"line": 1, "column": 18},
+              "finish": {"line": 1, "column": 39}},
+             "pp": "have t := 37; exact t"},
+            "name": "Lean.Parser.Tactic.tacticSeq1Indented",
+            "goalsBefore": ["⊢ Nat"],
+            "goalsAfter": []},
+           "kind": "TacticInfo",
+           "children":
+           [{"node":
+             {"stx":
+              {"range":
+               {"synthetic": false,
+                "start": {"line": 1, "column": 18},
+                "finish": {"line": 1, "column": 30}},
+               "pp": "have t := 37"},
+              "name": "Lean.Parser.Tactic.tacticHave_",
+              "goalsBefore": ["⊢ Nat"],
+              "goalsAfter": ["t : Nat\n⊢ Nat"]},
+             "kind": "TacticInfo",
+             "children":
+             [{"node":
+               {"stx":
+                {"range":
+                 {"synthetic": true,
+                  "start": {"line": 1, "column": 18},
+                  "finish": {"line": 1, "column": 30}},
+                 "pp": "refine_lift\n  have t := 37;\n  ?_"},
+                "name": "Lean.Parser.Tactic.tacticRefine_lift_",
+                "goalsBefore": ["⊢ Nat"],
+                "goalsAfter": ["t : Nat\n⊢ Nat"]},
+               "kind": "TacticInfo",
+               "children":
+               [{"node":
+                 {"stx":
+                  {"range":
+                   {"synthetic": true,
+                    "start": {"line": 1, "column": 18},
+                    "finish": {"line": 1, "column": 30}},
+                   "pp":
+                   "focus\n  (refine\n      no_implicit_lambda%\n        (have t := 37;\n        ?_);\n    rotate_right)"},
+                  "name": "Lean.Parser.Tactic.focus",
+                  "goalsBefore": ["⊢ Nat"],
+                  "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                 "kind": "TacticInfo",
+                 "children":
+                 [{"node":
+                   {"stx":
+                    {"range":
+                     {"synthetic": true,
+                      "start": {"line": 1, "column": 18},
+                      "finish": {"line": 1, "column": 30}},
+                     "pp": "<failed to pretty print>"},
+                    "name": null,
+                    "goalsBefore": ["⊢ Nat"],
+                    "goalsAfter": ["⊢ Nat"]},
+                   "kind": "TacticInfo",
+                   "children": []},
+                  {"node":
+                   {"stx":
+                    {"range":
+                     {"synthetic": true,
+                      "start": {"line": 1, "column": 18},
+                      "finish": {"line": 1, "column": 30}},
+                     "pp":
+                     "(refine\n      no_implicit_lambda%\n        (have t := 37;\n        ?_);\n    rotate_right)"},
+                    "name": "Lean.Parser.Tactic.tacticSeq",
+                    "goalsBefore": ["⊢ Nat"],
+                    "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                   "kind": "TacticInfo",
+                   "children":
+                   [{"node":
+                     {"stx":
+                      {"range":
+                       {"synthetic": true,
+                        "start": {"line": 1, "column": 18},
+                        "finish": {"line": 1, "column": 30}},
+                       "pp":
+                       "(refine\n      no_implicit_lambda%\n        (have t := 37;\n        ?_);\n    rotate_right)"},
+                      "name": "Lean.Parser.Tactic.tacticSeq1Indented",
+                      "goalsBefore": ["⊢ Nat"],
+                      "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                     "kind": "TacticInfo",
+                     "children":
+                     [{"node":
+                       {"stx":
+                        {"range":
+                         {"synthetic": true,
+                          "start": {"line": 1, "column": 18},
+                          "finish": {"line": 1, "column": 30}},
+                         "pp":
+                         "(refine\n    no_implicit_lambda%\n      (have t := 37;\n      ?_);\n  rotate_right)"},
+                        "name": "Lean.Parser.Tactic.paren",
+                        "goalsBefore": ["⊢ Nat"],
+                        "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                       "kind": "TacticInfo",
+                       "children":
+                       [{"node":
+                         {"stx":
+                          {"range":
+                           {"synthetic": true,
+                            "start": {"line": 1, "column": 18},
+                            "finish": {"line": 1, "column": 30}},
+                           "pp":
+                           "refine\n    no_implicit_lambda%\n      (have t := 37;\n      ?_);\n  rotate_right"},
+                          "name": "Lean.Parser.Tactic.tacticSeq",
+                          "goalsBefore": ["⊢ Nat"],
+                          "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                         "kind": "TacticInfo",
+                         "children":
+                         [{"node":
+                           {"stx":
+                            {"range":
+                             {"synthetic": true,
+                              "start": {"line": 1, "column": 18},
+                              "finish": {"line": 1, "column": 30}},
+                             "pp":
+                             "refine\n    no_implicit_lambda%\n      (have t := 37;\n      ?_);\n  rotate_right"},
+                            "name": "Lean.Parser.Tactic.tacticSeq1Indented",
+                            "goalsBefore": ["⊢ Nat"],
+                            "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                           "kind": "TacticInfo",
+                           "children":
+                           [{"node":
+                             {"stx":
+                              {"range":
+                               {"synthetic": true,
+                                "start": {"line": 1, "column": 18},
+                                "finish": {"line": 1, "column": 30}},
+                               "pp":
+                               "refine\n  no_implicit_lambda%\n    (have t := 37;\n    ?_)"},
+                              "name": "Lean.Parser.Tactic.refine",
+                              "goalsBefore": ["⊢ Nat"],
+                              "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                             "kind": "TacticInfo",
+                             "children":
+                             [{"node":
+                               {"stx":
+                                {"range":
+                                 {"synthetic": true,
+                                  "start": {"line": 1, "column": 18},
+                                  "finish": {"line": 1, "column": 30}},
+                                 "pp":
+                                 "no_implicit_lambda%\n  (have t := 37;\n  ?_)"},
+                                "isBinder": false,
+                                "expr": "let_fun t := 37;\nt",
+                                "expectedType": "Nat",
+                                "elaborator":
+                                "Lean.Elab.Term.elabNoImplicitLambda"},
+                               "kind": "TermInfo",
+                               "children":
+                               [{"node":
+                                 {"stx":
+                                  {"range":
+                                   {"synthetic": true,
+                                    "start": {"line": 1, "column": 18},
+                                    "finish": {"line": 1, "column": 30}},
+                                   "pp": "have t := 37;\n?_"},
+                                  "isBinder": false,
+                                  "expr": "let_fun t := 37;\nt",
+                                  "expectedType": "Nat",
+                                  "elaborator": "Lean.Elab.Term.expandHave"},
+                                 "kind": "TermInfo",
+                                 "children":
+                                 [{"node": null,
+                                   "kind": "MacroExpansionInfo",
+                                   "children":
+                                   [{"node":
+                                     {"stx":
+                                      {"range":
+                                       {"synthetic": true,
+                                        "start": {"line": 1, "column": 18},
+                                        "finish": {"line": 1, "column": 30}},
+                                       "pp": "let_fun t := 37;\n?_"},
+                                      "isBinder": false,
+                                      "expr": "let_fun t := 37;\nt",
+                                      "expectedType": "Nat",
+                                      "elaborator":
+                                      "Lean.Elab.Term.elabLetFunDecl"},
+                                     "kind": "TermInfo",
+                                     "children":
+                                     [{"node":
+                                       {"stx":
+                                        {"range":
+                                         {"synthetic": true,
+                                          "start": {"line": 1, "column": 23},
+                                          "finish": {"line": 1, "column": 24}},
+                                         "pp": "_"},
+                                        "isBinder": false,
+                                        "expr": "Nat",
+                                        "expectedType": "Type",
+                                        "elaborator":
+                                        "Lean.Elab.Term.elabHole"},
+                                       "kind": "TermInfo",
+                                       "children": []},
+                                      {"node":
+                                       {"stx":
+                                        {"range":
+                                         {"synthetic": false,
+                                          "start": {"line": 1, "column": 28},
+                                          "finish": {"line": 1, "column": 30}},
+                                         "pp": "37"},
+                                        "isBinder": false,
+                                        "expr": "37",
+                                        "expectedType": "Nat",
+                                        "elaborator":
+                                        "Lean.Elab.Term.elabNumLit"},
+                                       "kind": "TermInfo",
+                                       "children": []},
+                                      {"node":
+                                       {"stx":
+                                        {"range":
+                                         {"synthetic": false,
+                                          "start": {"line": 1, "column": 23},
+                                          "finish": {"line": 1, "column": 24}},
+                                         "pp": "t"},
+                                        "isBinder": true,
+                                        "expr": "t",
+                                        "elaborator": null},
+                                       "kind": "TermInfo",
+                                       "children": []},
+                                      {"node":
+                                       {"stx":
+                                        {"range":
+                                         {"synthetic": true,
+                                          "start": {"line": 1, "column": 18},
+                                          "finish": {"line": 1, "column": 30}},
+                                         "pp": "?_"},
+                                        "isBinder": false,
+                                        "expr": "t",
+                                        "expectedType": "Nat",
+                                        "elaborator":
+                                        "Lean.Elab.Term.elabSyntheticHole"},
+                                       "kind": "TermInfo",
+                                       "children": []}]}]}]}]}]},
+                            {"node":
+                             {"stx":
+                              {"range":
+                               {"synthetic": true,
+                                "start": {"line": 1, "column": 18},
+                                "finish": {"line": 1, "column": 30}},
+                               "pp": "<failed to pretty print>"},
+                              "name": null,
+                              "goalsBefore": ["t : Nat\n⊢ Nat"],
+                              "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                             "kind": "TacticInfo",
+                             "children": []},
+                            {"node":
+                             {"stx":
+                              {"range":
+                               {"synthetic": true,
+                                "start": {"line": 1, "column": 18},
+                                "finish": {"line": 1, "column": 30}},
+                               "pp": "rotate_right"},
+                              "name": "Lean.Parser.Tactic.rotateRight",
+                              "goalsBefore": ["t : Nat\n⊢ Nat"],
+                              "goalsAfter": ["t : Nat\n⊢ Nat"]},
+                             "kind": "TacticInfo",
+                             "children": []}]}]}]}]}]}]}]}]},
+            {"node":
+             {"stx":
+              {"range":
+               {"synthetic": false,
+                "start": {"line": 1, "column": 30},
+                "finish": {"line": 1, "column": 31}},
+               "pp": "<failed to pretty print>"},
+              "name": null,
+              "goalsBefore": ["t : Nat\n⊢ Nat"],
+              "goalsAfter": ["t : Nat\n⊢ Nat"]},
+             "kind": "TacticInfo",
+             "children": []},
+            {"node":
+             {"stx":
+              {"range":
+               {"synthetic": false,
+                "start": {"line": 1, "column": 32},
+                "finish": {"line": 1, "column": 39}},
+               "pp": "exact t"},
+              "name": "Lean.Parser.Tactic.exact",
+              "goalsBefore": ["t : Nat\n⊢ Nat"],
+              "goalsAfter": []},
+             "kind": "TacticInfo",
+             "children":
+             [{"node":
+               {"stx":
+                {"range":
+                 {"synthetic": false,
+                  "start": {"line": 1, "column": 38},
+                  "finish": {"line": 1, "column": 39}},
+                 "pp": "t"},
+                "isBinder": false,
+                "expr": "t",
+                "expectedType": "Nat",
+                "elaborator": "Lean.Elab.Term.elabIdent"},
+               "kind": "TermInfo",
+               "children":
+               [{"node": null, "kind": "CompletionInfo", "children": []},
+                {"node":
+                 {"stx":
+                  {"range":
+                   {"synthetic": false,
+                    "start": {"line": 1, "column": 38},
+                    "finish": {"line": 1, "column": 39}},
+                   "pp": "t"},
+                  "isBinder": false,
+                  "expr": "t",
+                  "expectedType": "Nat",
+                  "elaborator": null},
+                 "kind": "TermInfo",
+                 "children": []}]}]}]}]}]}]},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 1, "column": 4},
+        "finish": {"line": 1, "column": 5}},
+       "pp": "f"},
+      "isBinder": true,
+      "expr": "f",
+      "elaborator": null},
+     "kind": "TermInfo",
+     "children": []}]},
+  {"node":
+   {"stx":
+    {"range":
+     {"synthetic": false,
+      "start": {"line": 3, "column": 0},
+      "finish": {"line": 3, "column": 25}},
+     "pp": "def g : Nat := by exact 9"},
+    "elaborator": "Lean.Elab.Command.elabDeclaration"},
+   "kind": "CommmandInfo",
+   "children":
+   [{"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 3, "column": 8},
+        "finish": {"line": 3, "column": 11}},
+       "pp": "Nat"},
+      "isBinder": false,
+      "expr": "Nat",
+      "expectedType": "Type",
+      "elaborator": "Lean.Elab.Term.elabIdent"},
+     "kind": "TermInfo",
+     "children":
+     [{"node": null, "kind": "CompletionInfo", "children": []},
+      {"node":
+       {"stx":
+        {"range":
+         {"synthetic": false,
+          "start": {"line": 3, "column": 8},
+          "finish": {"line": 3, "column": 11}},
+         "pp": "Nat"},
+        "isBinder": false,
+        "expr": "Nat",
+        "expectedType": "Type",
+        "elaborator": null},
+       "kind": "TermInfo",
+       "children": []}]},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 3, "column": 4},
+        "finish": {"line": 3, "column": 5}},
+       "pp": "g"},
+      "isBinder": true,
+      "expr": "g",
+      "elaborator": null},
+     "kind": "TermInfo",
+     "children": []},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 3, "column": 15},
+        "finish": {"line": 3, "column": 25}},
+       "pp": "by exact 9"},
+      "name": "Lean.Parser.Term.byTactic",
+      "goalsBefore": ["⊢ Nat"],
+      "goalsAfter": []},
+     "kind": "TacticInfo",
+     "children":
+     [{"node":
+       {"stx":
+        {"range":
+         {"synthetic": false,
+          "start": {"line": 3, "column": 15},
+          "finish": {"line": 3, "column": 17}},
+         "pp": "<failed to pretty print>"},
+        "name": null,
+        "goalsBefore": ["⊢ Nat"],
+        "goalsAfter": []},
+       "kind": "TacticInfo",
+       "children":
+       [{"node":
+         {"stx":
+          {"range":
+           {"synthetic": false,
+            "start": {"line": 3, "column": 18},
+            "finish": {"line": 3, "column": 25}},
+           "pp": "exact 9"},
+          "name": "Lean.Parser.Tactic.tacticSeq",
+          "goalsBefore": ["⊢ Nat"],
+          "goalsAfter": []},
+         "kind": "TacticInfo",
+         "children":
+         [{"node":
+           {"stx":
+            {"range":
+             {"synthetic": false,
+              "start": {"line": 3, "column": 18},
+              "finish": {"line": 3, "column": 25}},
+             "pp": "exact 9"},
+            "name": "Lean.Parser.Tactic.tacticSeq1Indented",
+            "goalsBefore": ["⊢ Nat"],
+            "goalsAfter": []},
+           "kind": "TacticInfo",
+           "children":
+           [{"node":
+             {"stx":
+              {"range":
+               {"synthetic": false,
+                "start": {"line": 3, "column": 18},
+                "finish": {"line": 3, "column": 25}},
+               "pp": "exact 9"},
+              "name": "Lean.Parser.Tactic.exact",
+              "goalsBefore": ["⊢ Nat"],
+              "goalsAfter": []},
+             "kind": "TacticInfo",
+             "children":
+             [{"node":
+               {"stx":
+                {"range":
+                 {"synthetic": false,
+                  "start": {"line": 3, "column": 24},
+                  "finish": {"line": 3, "column": 25}},
+                 "pp": "9"},
+                "isBinder": false,
+                "expr": "9",
+                "expectedType": "Nat",
+                "elaborator": "Lean.Elab.Term.elabNumLit"},
+               "kind": "TermInfo",
+               "children": []}]}]}]}]}]},
+    {"node":
+     {"stx":
+      {"range":
+       {"synthetic": false,
+        "start": {"line": 3, "column": 4},
+        "finish": {"line": 3, "column": 5}},
+       "pp": "g"},
+      "isBinder": true,
+      "expr": "g",
+      "elaborator": null},
+     "kind": "TermInfo",
+     "children": []}]},
+  {"node":
+   {"stx":
+    {"range":
+     {"synthetic": false,
+      "start": {"line": 3, "column": 25},
+      "finish": {"line": 3, "column": 25}},
+     "pp": ""},
+    "elaborator": "Lean.Elab.Command.elabEoi"},
+   "kind": "CommmandInfo",
+   "children": []}],
+ "env": 0}
+

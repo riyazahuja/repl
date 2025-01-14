@@ -1,4 +1,4 @@
-import REPL.Util.Pickle
+import Batteries.Util.Pickle
 import Lean.Replay
 
 open System (FilePath)

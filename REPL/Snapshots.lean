@@ -5,7 +5,7 @@ Authors: Scott Morrison
 -/
 import Lean.Replay
 import Lean.Elab.Command
-import REPL.Util.Pickle
+import Batteries.Util.Pickle
 
 open Lean Elab
 
