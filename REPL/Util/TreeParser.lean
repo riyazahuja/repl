@@ -229,7 +229,7 @@ def existsSpawnedArrow (nodeA : ProofStep) (nodeB : ProofStep) : Bool :=
   let inputGoalB := nodeB.goalBefore.id
   outputGoalsA.any (fun id => id==inputGoalB)
 
-def getProofTree (steps : List ProofStep) : List ((List Nat) × (List Nat)) :=
+def getProofTree (steps : List ProofStep) : List (String × ((List Nat) × (List Nat))) :=
 
   let steps : List ProofStep := steps.map (fun step =>
     ⟨step.tacticString,
@@ -250,4 +250,4 @@ def getProofTree (steps : List ProofStep) : List ((List Nat) × (List Nat)) :=
         spawned_arrow_idx.filterMap (fun (j,k) => if i == j then some k else none)))
 
     let idx_map := steps.map (fun ps => ps.tacticString)
-    base_nodes.enum.map (fun (i,xs) => xs)--(idx_map.get! i, xs))
+    base_nodes.enum.map (fun (i,xs) => (idx_map.get! i, xs))

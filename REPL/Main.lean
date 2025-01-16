@@ -126,6 +126,7 @@ def tactics (trees : List InfoTree) : M m (List Tactic) :=
       let goals := s!"{(← ctx.ppGoals goals)}".trim
       let tactic := Format.pretty (← ppTactic ctx stx)
       let proofStateId ← proofState.mapM recordProofSnapshot
+      -- IO.println s!"============\n{ctx.fileMap.source}\n============="
       return Tactic.of goals tactic pos endPos proofStateId
 
 /-- Record a `ProofSnapshot` and generate a JSON response for it. -/
@@ -218,6 +219,7 @@ def runCommand (s : Command) : M IO (CommandResponse ⊕ Error) := do
         tacticCache? := none,
         snap? := none,
         cancelTk? := none } }
+
   let env ← recordCommandSnapshot cmdSnapshot
   let jsonTrees := match s.infotree with
   | some "full" => trees
@@ -264,7 +266,8 @@ def runCommand (s : Command) : M IO (CommandResponse ⊕ Error) := do
         | some result => getProofTree result.steps
         | none => []
 
-      let PT_json := PT.map (fun ⟨children,spawned_children⟩ => Json.mkObj [
+      let PT_json := PT.map (fun (tactic,(children,spawned_children)) => Json.mkObj [
+        ("tactic", Json.str tactic),
         ("children", Json.arr <| children.map (fun i => Json.num <| JsonNumber.fromNat i) |>.toArray),
         ("spawned_children", Json.arr <| spawned_children.map (fun i => Json.num <| JsonNumber.fromNat i) |>.toArray)
       ])
