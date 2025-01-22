@@ -11,6 +11,9 @@ import REPL.Lean.Environment
 import REPL.Lean.InfoTree
 import REPL.Lean.InfoTree.ToJson
 import REPL.Snapshots
+import REPL.Util.Helpers
+import REPL.Util.TreeParser
+
 
 /-!
 # A REPL for Lean.
@@ -226,12 +229,73 @@ def runCommand (s : Command) : M IO (CommandResponse ⊕ Error) := do
     pure none
   else
     pure <| some <| Json.arr (← jsonTrees.toArray.mapM fun t => t.toJson none)
+  let theorems ← if s.theorems.getD false then
+    let infos_and_trees ← getElabDeclInfo trees
+    let mut output := []
+    for ⟨(range, info), tree⟩ in infos_and_trees do
+      let decl ← ppDeclWithoutProof info
+      -- IO.println s!"{range} - {decl}"
+      let filteredTactics := tactics.enum.filter fun (_,t) =>
+        t.pos.line >= range.1.line && t.endPos.line <= range.2.line
+        && (t.pos.column >= range.1.column || t.pos.line != range.1.line) &&
+        (t.endPos.column <= range.2.column || t.endPos.line != range.2.line)
+      let tacs := Json.arr <| filteredTactics.map (fun ⟨i,_⟩ => Json.num <| JsonNumber.fromNat i) |>.toArray
+      -- IO.println s!"{tacs}"
+      -- IO.println ""
+
+
+      let filteredMessages := messages.enum.filter fun (_, m) =>
+        match m.endPos with
+        | none =>
+          let pos := m.pos
+          pos.line >= range.1.line && pos.line <= range.2.line &&
+          (pos.column >= range.1.column || pos.line != range.1.line) &&
+          (pos.column <= range.2.column || pos.line != range.2.line)
+        | some endPos =>
+          let pos := m.pos
+          pos.line >= range.1.line && endPos.line <= range.2.line &&
+          (pos.column >= range.1.column || pos.line != range.1.line) &&
+          (endPos.column <= range.2.column || endPos.line != range.2.line)
+      let msgs := Json.arr <| filteredMessages.map (fun ⟨i,_⟩ => Json.num <| JsonNumber.fromNat i) |>.toArray
+
+      let parsedTree_opt ← BetterParser tree
+      let PT := match parsedTree_opt with
+        | some result => getProofTree result.steps
+        | none => []
+
+      let PT_json := PT.map (fun (tactic,(children,spawned_children)) => Json.mkObj [
+        ("tactic", Json.str tactic),
+        ("children", Json.arr <| children.map (fun i => Json.num <| JsonNumber.fromNat i) |>.toArray),
+        ("spawned_children", Json.arr <| spawned_children.map (fun i => Json.num <| JsonNumber.fromNat i) |>.toArray)
+      ])
+      let PT_json := Json.arr <| PT_json.toArray
+
+      let theorem_data := Json.mkObj [
+        ("decl", decl),
+        ("tactics", tacs),
+        ("messages", msgs),
+        ("start", Json.mkObj [("line", range.1.line), ("column", range.1.column)]),
+        ("end", Json.mkObj [("line", range.2.line), ("column", range.2.column)]),
+        ("proofTree", PT_json)
+      ]
+      output := if filteredTactics.isEmpty then output else theorem_data :: output
+      -- IO.println s!"{PT_json}"
+      -- IO.println s!""
+    pure <| some <| Json.arr output.toArray
+  else
+    pure none
+
+  -- IO.println s!"{theorems}"
+  -- IO.println s!""
+
   return .inl
     { env,
       messages,
       sorries,
-      tactics
-      infotree }
+      tactics,
+      infotree,
+      theorems}
+
 
 def processFile (s : File) : M IO (CommandResponse ⊕ Error) := do
   try
