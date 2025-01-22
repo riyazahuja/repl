@@ -12,9 +12,11 @@ import REPL.Lean.InfoTree
 import REPL.Lean.InfoTree.ToJson
 import REPL.Snapshots
 import REPL.Util.Helpers
+import Mathlib.Lean.CoreM
 import REPL.Util.TreeParser
-
-
+import ImportGraph.RequiredModules
+import Lean.Server.GoTo
+open Lean.Server
 /-!
 # A REPL for Lean.
 
@@ -119,7 +121,7 @@ def ppTactic (ctx : ContextInfo) (stx : Syntax) : IO Format :=
   catch _ =>
     pure "<failed to pretty print>"
 
-def tactics (trees : List InfoTree) : M m (List Tactic) :=
+def tactics (trees : List InfoTree): M m (List Tactic) :=
   trees.flatMap InfoTree.tactics |>.mapM
     fun ⟨ctx, stx, goals, pos, endPos, ns⟩ => do
       let proofState := some (← ProofSnapshot.create ctx none none goals)
@@ -210,6 +212,40 @@ def runCommand (s : Command) : M IO (CommandResponse ⊕ Error) := do
   let tactics ← match s.allTactics with
   | some true => tactics trees
   | _ => pure []
+
+  let pf_env := cmdState.env
+  let constants := tactics.map (fun t => t.usedConstants.toList)
+  let modules := constants.map (fun t => t.map fun c => (c,pf_env.getModuleFor? c |>.getD (Name.anonymous)))
+  let consts_mods_kind := modules.map (fun t => t.map fun (c, m) => (c, Json.str m.toString, Json.str (getKind pf_env.constants c)))
+
+  let mods := modules.flatMap (fun x => x.map fun m => m.2) |>.eraseDups |>.filter fun m => m != Name.anonymous
+  let constant_info ← CoreM.withImportModules mods.toArray do
+    let mut out := []
+    for item in consts_mods_kind do
+      let mut inst := []
+      for (c, modules, kind) in item do
+        let rgs := ((← findDeclarationRanges? c).getD default).range
+        inst := Json.mkObj [
+          ("name", Json.str c.toString),
+          ("modules", modules),
+          ("kind", kind),
+          ("range", Json.mkObj [
+            ("start", Json.mkObj [
+              ("line", rgs.pos.line),
+              ("column", rgs.pos.column)
+            ]),
+            ("end", Json.mkObj [
+              ("line", rgs.endPos.line),
+              ("column", rgs.endPos.column)
+            ])
+          ])
+        ] :: inst
+      out := inst :: out
+    return out
+
+  let constant_info_json := Json.arr <| constant_info.map (fun l => Json.arr l.toArray) |>.toArray
+
+
   let cmdSnapshot :=
   { cmdState
     cmdContext := (cmdSnapshot?.map fun c => c.cmdContext).getD
@@ -276,7 +312,8 @@ def runCommand (s : Command) : M IO (CommandResponse ⊕ Error) := do
         ("messages", msgs),
         ("start", Json.mkObj [("line", range.1.line), ("column", range.1.column)]),
         ("end", Json.mkObj [("line", range.2.line), ("column", range.2.column)]),
-        ("proofTree", PT_json)
+        ("proofTree", PT_json),
+        ("constants", constant_info_json)
       ]
       output := if filteredTactics.isEmpty then output else theorem_data :: output
       -- IO.println s!"{PT_json}"
@@ -397,3 +434,5 @@ where loop : M IO Unit := do
 unsafe def main (_ : List String) : IO Unit := do
   initSearchPath (← Lean.findSysroot)
   repl
+
+#check documentUriFromModule
